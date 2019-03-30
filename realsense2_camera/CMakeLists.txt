@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(realsense2_camera)
-add_compile_options(-std=c++11)
+
+include ("../../cmake_modules/CMakeOpt.cmake")
 
 option(BUILD_WITH_OPENMP "Use OpenMP" OFF)
 option(SET_USER_BREAK_AT_STARTUP "Set user wait point in startup (for debug)" OFF)
@@ -52,11 +53,11 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 string(TOUPPER "${CMAKE_BUILD_TYPE}" uppercase_CMAKE_BUILD_TYPE)
-if (${uppercase_CMAKE_BUILD_TYPE} STREQUAL "RELEASE")
-    message(STATUS "Create Release Build.")
-    set(CMAKE_CXX_FLAGS "-O2 ${CMAKE_CXX_FLAGS}")
+if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
+	message(STATUS "Create Debug Build.")
 else()
-    message(STATUS "Create Debug Build.")
+    message(STATUS "Create Release Build.")
+	#set(CMAKE_CXX_FLAGS "-O2 ${CMAKE_CXX_FLAGS}")
 endif()
 
 if (WIN32)
